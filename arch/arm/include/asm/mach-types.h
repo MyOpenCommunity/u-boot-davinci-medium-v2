@@ -1107,6 +1107,7 @@ extern unsigned int __machine_arch_type;
 #define MACH_TYPE_OMAP5_SEVM           3777
 #define MACH_TYPE_ARMADILLO_800EVA     3863
 #define MACH_TYPE_KZM9G                4140
+#define MACH_TYPE_JUMBO_D              3982
 #define MACH_TYPE_JUMBO_I              3983
 #define MACH_TYPE_LAGO                 4227
 
@@ -14248,6 +14249,18 @@ extern unsigned int __machine_arch_type;
 # define machine_is_kzm9g()	(machine_arch_type == MACH_TYPE_KZM9G)
 #else
 # define machine_is_kzm9g()	(0)
+#endif
+
+#ifdef CONFIG_MACH_JUMBO_D
+# ifdef machine_arch_type
+#  undef machine_arch_type
+#  define machine_arch_type     __machine_arch_type
+# else
+#  define machine_arch_type     MACH_TYPE_JUMBO_D
+# endif
+# define machine_is_jumbo-d()   (machine_arch_type == MACH_TYPE_JUMBO_D)
+#else
+# define machine_is_jumbo-d()   (0)
 #endif
 
 #ifdef CONFIG_MACH_JUMBO_I
