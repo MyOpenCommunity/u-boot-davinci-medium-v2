@@ -484,6 +484,9 @@ void main_loop (void)
 
 	debug ("### main_loop: bootcmd=\"%s\"\n", s ? s : "<UNDEFINED>");
 
+	if (!s)
+		gd->flags &= ~GD_FLG_SILENT; /* Disabling silent if not bootcmd */
+
 	if (bootdelay != -1 && s && !abortboot(bootdelay)) {
 # ifdef CONFIG_AUTOBOOT_KEYED
 		int prev = disable_ctrlc(1);	/* disable Control C checking */
