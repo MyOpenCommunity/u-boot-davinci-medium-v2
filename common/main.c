@@ -401,7 +401,12 @@ void main_loop (void)
 
 #ifdef CONFIG_VERSION_VARIABLE
 	{
-		setenv ("ver", version_string);  /* set version variable */
+		s = strdup(getenv("ver"));
+
+		if ((s == NULL) || (strcmp(s, version_string))) {
+			setenv("ver", version_string);  /* set version variable */
+			saveenv();
+		}
 	}
 #endif /* CONFIG_VERSION_VARIABLE */
 
