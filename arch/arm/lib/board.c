@@ -620,6 +620,33 @@ void board_init_r(gd_t *id, ulong dest_addr)
 #ifdef CONFIG_BOARD_LATE_INIT
 	board_late_init();
 #endif
+#ifdef BASELINE_LOADER_VERSION_ADDRESS
+	/*
+	 * The baseline versione must be included in '<' and '>' chars
+	 * and not exceed 64 bytes size.
+	 */
+	char *s;
+	s = getenv("baselineloader_version");
+	uchar baselineloader[64];
+	uchar *ptr = BASELINE_LOADER_VERSION_ADDRESS;
+	int i;
+	if (*ptr == '<') {
+		while (1) {
+			baselineloader[i] = *(ptr + i + 1);
+			i++;
+			if (*(ptr + i + 1) == '>') {
+				baselineloader[i] = '\0';
+				break;
+			}
+		}
+	} else
+		strcpy((char *)baselineloader, "BASELINE loader ver not known");
+
+	if ((s == NULL) || (strcmp(s, baselineloader))) {
+		setenv("baselineloader_version", (char *)baselineloader);
+		saveenv();
+	}
+#endif
 
 #ifdef CONFIG_BITBANGMII
 	bb_miiphy_init();
