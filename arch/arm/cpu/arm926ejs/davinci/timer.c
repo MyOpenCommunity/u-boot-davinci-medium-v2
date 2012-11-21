@@ -82,7 +82,13 @@ static void wd_timer_init(void)
 	writel(0xda7e4000, &wdtimer->wdtcr);
 }
 
-void watchdog_reset(viod) { /* nop */ }
+void watchdog_reset(viod)
+{
+	writel(0x0, &wdtimer->tim12);
+	writel(0x0, &wdtimer->tim34);
+	writel(0xa5c60000, &wdtimer->wdtcr);
+	writel(0xda7e0000, &wdtimer->wdtcr);
+}
 
 #else
 static void wd_timer_init(void) { /* nop */ }
