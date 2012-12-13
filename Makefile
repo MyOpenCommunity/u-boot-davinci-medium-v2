@@ -25,6 +25,7 @@ VERSION = 2013
 PATCHLEVEL = 01
 SUBLEVEL =
 EXTRAVERSION = -rc1
+LOCALVERSION =
 ifneq "$(SUBLEVEL)" ""
 U_BOOT_VERSION = $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(EXTRAVERSION)
 else
@@ -717,12 +718,20 @@ endif	# config.mk
 
 $(VERSION_FILE):
 		@mkdir -p $(dir $(VERSION_FILE))
+ifeq "$(LOCALVERSION)" ""
 		@( localvers='$(shell $(TOPDIR)/tools/setlocalversion $(TOPDIR))' ; \
-		   printf '#define PLAIN_VERSION "%s%s"\n' \
+		printf '#define PLAIN_VERSION "%s%s"\n' \
 			"$(U_BOOT_VERSION)" "$${localvers}" ; \
-		   printf '#define U_BOOT_VERSION "U-Boot %s%s"\n' \
+	   	printf '#define U_BOOT_VERSION "U-Boot %s%s"\n' \
 			"$(U_BOOT_VERSION)" "$${localvers}" ; \
 		) > $@.tmp
+else
+		@( printf '#define PLAIN_VERSION "%s-%s"\n' \
+			"$(U_BOOT_VERSION)" "$(LOCALVERSION)" ; \
+		printf '#define U_BOOT_VERSION "U-Boot %s-%s"\n' \
+			"$(U_BOOT_VERSION)" "$(LOCALVERSION)" ; \
+		) > $@.tmp
+endif
 		@( printf '#define CC_VERSION_STRING "%s"\n' \
 		 '$(shell $(CC) --version | head -n 1)' )>>  $@.tmp
 		@( printf '#define LD_VERSION_STRING "%s"\n' \
