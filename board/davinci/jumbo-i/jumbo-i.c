@@ -89,6 +89,7 @@ int board_nand_init(struct nand_chip *nand)
 
 	davinci_nand_init(nand);
 	nand->options |= NAND_SKIP_BBTSCAN;
+	nand->select_chip = nand_davinci_select_chip;
 	return 0;
 }
 #endif
