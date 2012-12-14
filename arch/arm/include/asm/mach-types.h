@@ -14259,9 +14259,9 @@ extern unsigned int __machine_arch_type;
 # else
 #  define machine_arch_type     MACH_TYPE_JUMBO_D
 # endif
-# define machine_is_jumbo-d()   (machine_arch_type == MACH_TYPE_JUMBO_D)
+# define machine_is_jumbo_d()   (machine_arch_type == MACH_TYPE_JUMBO_D)
 #else
-# define machine_is_jumbo-d()   (0)
+# define machine_is_jumbo_d()   (0)
 #endif
 
 #ifdef CONFIG_MACH_JUMBO_I
@@ -14271,9 +14271,9 @@ extern unsigned int __machine_arch_type;
 # else
 #  define machine_arch_type     MACH_TYPE_JUMBO_I
 # endif
-# define machine_is_jumbo-i()   (machine_arch_type == MACH_TYPE_JUMBO_I)
+# define machine_is_jumbo_i()   (machine_arch_type == MACH_TYPE_JUMBO_I)
 #else
-# define machine_is_jumbo-i()   (0)
+# define machine_is_jumbo_i()   (0)
 #endif
 
 #ifdef CONFIG_MACH_LAGO
