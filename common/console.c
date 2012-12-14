@@ -414,10 +414,22 @@ int printf(const char *fmt, ...)
 {
 	va_list args;
 	uint i;
+	int lev = 0;
 	char printbuffer[CONFIG_SYS_PBSIZE];
 
 #ifndef CONFIG_PRE_CONSOLE_BUFFER
 	if (!gd->have_console)
+		return 0;
+#endif
+
+#ifdef PRINTK_LEVEL
+	if ((*fmt == '<') && (*(fmt + 2) == '>') &&
+	    (*(fmt + 1) >= '0') && (*(fmt + 1) <= '7')) {
+		lev = *(fmt + 1) - '0';
+		fmt = fmt + 3;
+	}
+
+	if (lev > PRINTK_LEVEL)
 		return 0;
 #endif
 

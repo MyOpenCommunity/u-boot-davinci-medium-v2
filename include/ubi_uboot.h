@@ -136,11 +136,6 @@ struct kmem_cache { int i; };
 #define cond_resched()			do { } while (0)
 #define yield()				do { } while (0)
 
-#define KERN_WARNING
-#define KERN_ERR
-#define KERN_NOTICE
-#define KERN_DEBUG
-
 #define GFP_KERNEL			0
 #define GFP_NOFS			1
 
