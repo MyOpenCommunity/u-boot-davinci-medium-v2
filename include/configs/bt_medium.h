@@ -22,6 +22,17 @@
 #ifndef __BT_CONFIG_H
 #define __BT_CONFIG_H
 
+#define PRINTK_EMERG	0
+#define PRINTK_ALERT	1
+#define PRINTK_CRIT	2
+#define PRINTK_ERR	3
+#define PRINTK_WARNING	4
+#define PRINTK_NOTICE	5
+#define PRINTK_INFO	6
+#define PRINTK_DEBUG	7
+
+#define PRINTK_LEVEL PRINTK_ERR
+
 #define CONFIG_VERSION_VARIABLE
 
 #define CONFIG_SKIP_LOWLEVEL_INIT	/* U-Boot is a 3rd stage loader */
