@@ -25,5 +25,3 @@ make -j16 && echo "Lago OK" >> /tmp/Medium_compile_u-boot.log
 make distclean
 make davinci_amico-i_config
 make -j16 && echo "Amico-i OK" >> /tmp/Medium_compile_u-boot.log
-make davinci_amico-d_config
-make -j16 && echo "Amico-d OK" >> /tmp/Medium_compile_u-boot.log
