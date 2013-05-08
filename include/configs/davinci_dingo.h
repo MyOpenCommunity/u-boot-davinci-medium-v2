@@ -24,6 +24,8 @@
 #define DAVINCI_DINGO
 #define BOARD_STRING "Dingo"
 
+#define CONFIG_BOARD_LATE_INIT
+
 /* RAM size */
 #define PHYS_SDRAM_1_SIZE		(128 << 20)	/* 128 MiB */
 

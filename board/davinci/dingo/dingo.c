@@ -31,10 +31,15 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
+#define PUPDCTL1		0x01c4007c
+#define IN_DATA45		0x01c67070
+
 int board_init(void)
 {
 	gd->bd->bi_arch_number = MACH_TYPE_DINGO;
 	gd->bd->bi_boot_params = PHYS_SDRAM_1 + 0x100;
+
+	writel((readl(PUPDCTL1) & ~0x10000000), PUPDCTL1);
 
 	icache_enable();
 	invalidate_dcache_all();
@@ -43,6 +48,14 @@ int board_init(void)
 
 	return 0;
 }
+
+#ifdef CONFIG_BOARD_LATE_INIT
+int board_late_init(void)
+{
+	if (readl(IN_DATA45) & 0x40000000)
+		setenv("FORCE_RECOVERY", "1");
+}
+#endif
 
 void enable_vbus(void)
 {}
@@ -121,7 +134,6 @@ int board_mmc_init(bd_t *bis)
 		return err;
 
 #ifdef CONFIG_DAVINCI_MMC_SD1
-#define PUPDCTL1		0x01c4007c
 	/* PINMUX(4)-DAT0-3/CMD;  PINMUX(0)-CLK */
 	writel((readl(PINMUX4) | 0x55400000), PINMUX4);
 	writel((readl(PINMUX0) | 0x00010000), PINMUX0);
