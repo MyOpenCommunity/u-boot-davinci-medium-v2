@@ -1113,6 +1113,7 @@ extern unsigned int __machine_arch_type;
 #define MACH_TYPE_LAGO                 4227
 #define MACH_TYPE_AMICO_I              4326
 #define MACH_TYPE_AMICO_E              4327
+#define MACH_TYPE_AMICO_P              4798
 
 #ifdef CONFIG_ARCH_EBSA110
 # ifdef machine_arch_type
@@ -14324,6 +14325,18 @@ extern unsigned int __machine_arch_type;
 # define machine_is_amico_e()      (machine_arch_type == MACH_TYPE_AMICO_E)
 #else
 # define machine_is_amico_e()      (0)
+#endif
+
+#ifdef MACH_TYPE_AMICO_P
+# ifdef machine_arch_type
+#  undef machine_arch_type
+#  define machine_arch_type     __machine_arch_type
+# else
+#  define machine_arch_type     MACH_TYPE_AMICO_P
+# endif
+# define machine_is_amico_p()      (machine_arch_type == MACH_TYPE_AMICO_P)
+#else
+# define machine_is_amico_p()      (0)
 #endif
 
 /*

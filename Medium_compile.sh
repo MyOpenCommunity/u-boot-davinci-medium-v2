@@ -27,3 +27,5 @@ make davinci_amico-i_config
 make -j16 && echo "Amico-i OK" >> /tmp/Medium_compile_u-boot.log
 make davinci_amico-e_config
 make -j16 && echo "Amico-e OK" >> /tmp/Medium_compile_u-boot.log
+make davinci_amico-p_config
+make -j16 && echo "Amico-p OK" >> /tmp/Medium_compile_u-boot.log
