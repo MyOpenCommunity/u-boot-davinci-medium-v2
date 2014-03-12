@@ -1115,6 +1115,7 @@ extern unsigned int __machine_arch_type;
 #define MACH_TYPE_AMICO_E              4327
 #define MACH_TYPE_AMICO_S              4797
 #define MACH_TYPE_AMICO_P              4798
+#define MACH_TYPE_MHPLAY_W             4857
 
 #ifdef CONFIG_ARCH_EBSA110
 # ifdef machine_arch_type
@@ -14314,6 +14315,18 @@ extern unsigned int __machine_arch_type;
 # define machine_is_amico_i()      (machine_arch_type == MACH_TYPE_AMICO_I)
 #else
 # define machine_is_amico_i()      (0)
+#endif
+
+#ifdef MACH_TYPE_MHPLAY_W
+# ifdef machine_arch_type
+#  undef machine_arch_type
+#  define machine_arch_type     __machine_arch_type
+# else
+#  define machine_arch_type     MACH_TYPE_MHPLAY_W
+# endif
+# define machine_is_mhplay_w()      (machine_arch_type == MACH_TYPE_MHPLAY_W)
+#else
+# define machine_is_mhplay_w()      (0)
 #endif
 
 #ifdef MACH_TYPE_AMICO_E
