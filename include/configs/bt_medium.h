@@ -87,6 +87,9 @@
 #define CONFIG_EMAC_MDIO_PHY_NUM	0
 #define CONFIG_MII
 #define CONFIG_CMD_MII
+#define CONFIG_PHYLIB /* already set by default */
+#define CONFIG_PHY_MICREL
+#define CONFIG_SYS_DAVINCI_EMAC_PHY_COUNT 2
 
 #define CONFIG_NET_RETRY_COUNT	10
 #define CONFIG_NET_MULTI
