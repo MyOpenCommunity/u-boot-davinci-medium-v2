@@ -54,6 +54,8 @@ int board_late_init(void)
 {
 	if (readl(IN_DATA45) & 0x40000000)
 		setenv("FORCE_RECOVERY", "1");
+
+	return 0;
 }
 #endif
 
@@ -66,6 +68,14 @@ int board_eth_init(bd_t *bis)
 
 	/* Configure PINMUX 3 to enable EMAC pins */
 	writel((readl(PINMUX3) | 0x1affff), PINMUX3);
+
+	/* External PHY reset cycle */
+	writel((readl(GPIO_BANK2_REG_DIR_ADDR) & ~0x1000), GPIO_BANK2_REG_DIR_ADDR);
+	udelay(50000);
+	writel(0x1000, GPIO_BANK2_REG_CLR_ADDR);
+	udelay(50000);
+	writel(0x1000, GPIO_BANK2_REG_SET_ADDR);
+	udelay(50000);
 
 	/* Using this function for setting a random mac address */
 	eth_random_enetaddr(enetaddr);
