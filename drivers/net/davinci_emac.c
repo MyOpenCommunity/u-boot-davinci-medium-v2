@@ -235,11 +235,51 @@ static int davinci_eth_phy_detect(void)
 	return count;
 }
 
+/* Workaround for eth PHY problem's */
+void davinci_eth_workaround(u_int8_t phy_addr)
+{
+	int tmp;
+
+	if (readl(&adap_mdio->ALIVE) == 0) {
+		debug_emac("No active PHYs, run davinci_eth_mdio_enable() again\n");
+		davinci_eth_mdio_enable();
+		udelay(50000);
+	}
+
+	writel(MDIO_USERACCESS0_GO |
+	       MDIO_USERACCESS0_WRITE_READ |
+	       (0x1f << 21) |
+	       ((phy_addr & 0x1f) << 16),
+	       &adap_mdio->USERACCESS0);
+
+	/* Wait for command to complete */
+	while ((tmp = readl(&adap_mdio->USERACCESS0)) & MDIO_USERACCESS0_GO);
+
+	if (tmp & MDIO_USERACCESS0_ACK) {
+		if (tmp & 0x1) {
+			debug_emac("Scrambler disabled, enable again\n");
+			while (readl(&adap_mdio->USERACCESS0) & MDIO_USERACCESS0_GO);
+
+			writel(MDIO_USERACCESS0_GO |
+			       MDIO_USERACCESS0_WRITE_WRITE |
+			       (0x1f << 21) |
+			       ((phy_addr & 0x1f) << 16) |
+			       (tmp & 0xfffe),
+			       &adap_mdio->USERACCESS0);
+
+			/* Wait for command to complete */
+			while (readl(&adap_mdio->USERACCESS0) & MDIO_USERACCESS0_GO);
+		}
+	}
+
+}
 
 /* Read a PHY register via MDIO inteface. Returns 1 on success, 0 otherwise */
 int davinci_eth_phy_read(u_int8_t phy_addr, u_int8_t reg_num, u_int16_t *data)
 {
 	int	tmp;
+
+	davinci_eth_workaround(phy_addr);
 
 	while (readl(&adap_mdio->USERACCESS0) & MDIO_USERACCESS0_GO)
 		;
@@ -266,6 +306,7 @@ int davinci_eth_phy_read(u_int8_t phy_addr, u_int8_t reg_num, u_int16_t *data)
 /* Write to a PHY register via MDIO inteface. Blocks until operation is complete. */
 int davinci_eth_phy_write(u_int8_t phy_addr, u_int8_t reg_num, u_int16_t data)
 {
+	davinci_eth_workaround(phy_addr);
 
 	while (readl(&adap_mdio->USERACCESS0) & MDIO_USERACCESS0_GO)
 		;
