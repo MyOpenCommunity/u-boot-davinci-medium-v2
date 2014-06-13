@@ -34,3 +34,6 @@ make -j16 && echo "Amico-s OK" >> /tmp/Medium_compile_u-boot.log
 make distclean
 make davinci_mhplay-w_config
 make -j16 && echo "Mhplay-w OK" >> /tmp/Medium_compile_u-boot.log
+make distclean
+make davinci_seah_config
+make -j16 && echo "Seah OK" >> /tmp/Medium_compile_u-boot.log
