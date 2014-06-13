@@ -55,11 +55,10 @@ int board_eth_init(bd_t *bis)
 
 	/* External PHY reset cycle */
 	writel((readl(GPIO_BANK2_REG_DIR_ADDR) & ~0x1000), GPIO_BANK2_REG_DIR_ADDR);
-	udelay(50000);
 	writel(0x1000, GPIO_BANK2_REG_CLR_ADDR);
-	udelay(50000);
+	udelay(10000);
 	writel(0x1000, GPIO_BANK2_REG_SET_ADDR);
-	udelay(300000);
+	udelay(100000);
 
 	/* Using this function for setting a random mac address */
 	eth_random_enetaddr(enetaddr);
