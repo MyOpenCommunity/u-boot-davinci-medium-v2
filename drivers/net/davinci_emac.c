@@ -895,6 +895,16 @@ int davinci_emac_initialize(void)
 			phy[i].auto_negotiate = gen_auto_negotiate;
 			break;
 #endif
+#ifdef PHY_KSZ8041
+		case PHY_KSZ8041:
+			sprintf(phy[i].name, "KSZ8041 @ 0x%02x",
+						active_phy_addr[i]);
+			phy[i].init = ksz8041_init_phy;
+			phy[i].is_phy_connected = gen_is_phy_connected;
+			phy[i].get_link_speed = gen_get_link_speed;
+			phy[i].auto_negotiate = gen_auto_negotiate;
+			break;
+#endif
 		default:
 			sprintf(phy[i].name, "GENERIC @ 0x%02x",
 						active_phy_addr[i]);
@@ -909,6 +919,24 @@ int davinci_emac_initialize(void)
 		miiphy_register(phy[i].name, davinci_mii_phy_read,
 						davinci_mii_phy_write);
 	}
+
+/* These boards need a fix after phy startup */
+#if defined(MACH_TYPE_BASI) || \
+	defined(MACH_TYPE_DINGO) || \
+	defined(MACH_TYPE_JUMBO_D) || \
+	defined(MACH_TYPE_JUMBO_I) || \
+	defined(MACH_TYPE_OWL) || \
+	defined(MACH_TYPE_LAGO) || \
+	defined(MACH_TYPE_AMICO_I) || \
+	defined(MACH_TYPE_AMICO_E) || \
+	defined(MACH_TYPE_AMICO_S) || \
+	defined(MACH_TYPE_AMICO_P) || \
+	defined(MACH_TYPE_MHPLAY_W) || \
+	defined(MACH_TYPE_SEAH)
+	for (i = 0; i < num_phy; i++)
+		if (phy[i].is_phy_connected(i))
+			phy[i].init(i);
+#endif
 
 #if defined(CONFIG_DRIVER_TI_EMAC_USE_RMII) && \
 		defined(CONFIG_MACH_DAVINCI_DA850_EVM) && \
