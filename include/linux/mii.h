@@ -31,6 +31,7 @@
 #define MII_RESV2	    0x1a	/* Reserved...		       */
 #define MII_TPISTATUS	    0x1b	/* TPI status for 10mbps       */
 #define MII_NCONFIG	    0x1c	/* Network interface config    */
+#define MII_CTRL_2	    0x1f	/* PHY Control 2 */
 
 /* Basic mode control register. */
 #define BMCR_RESV		0x003f	/* Unused...		       */

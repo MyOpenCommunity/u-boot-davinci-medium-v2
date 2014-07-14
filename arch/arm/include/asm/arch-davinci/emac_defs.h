@@ -90,6 +90,9 @@ int ksz8873_get_link_speed(int phy_addr);
 int ksz8873_init_phy(int phy_addr);
 int ksz8873_auto_negotiate(int phy_addr);
 
+#define PHY_KSZ8041	(0x00221513)
+int ksz8041_init_phy(int phy_addr);
+
 #define PHY_LXT972	(0x001378e2)
 int lxt972_is_phy_connected(int phy_addr);
 int lxt972_get_link_speed(int phy_addr);
