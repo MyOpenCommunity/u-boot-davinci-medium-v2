@@ -53,6 +53,14 @@ int board_eth_init(bd_t *bis)
 	/* Configure PINMUX 3 to enable EMAC pins */
 	writel((readl(PINMUX3) | 0x1affff), PINMUX3);
 
+	/* External PHY reset cycle */
+	writel((readl(GPIO_BANK2_REG_DIR_ADDR) & ~0x1000),
+	       GPIO_BANK2_REG_DIR_ADDR);
+	writel(0x1000, GPIO_BANK2_REG_CLR_ADDR);
+	udelay(10000);
+	writel(0x1000, GPIO_BANK2_REG_SET_ADDR);
+	udelay(120000);
+
 	/* Using this function for setting a random mac address */
 	eth_random_enetaddr(enetaddr);
 	eth_setenv_enetaddr("ethaddr", enetaddr);

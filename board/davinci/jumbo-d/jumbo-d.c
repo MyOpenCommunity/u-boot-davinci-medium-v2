@@ -59,7 +59,7 @@ int board_eth_init(bd_t *bis)
 	writel(0x1000, GPIO_BANK2_REG_CLR_ADDR);
 	udelay(10000);
 	writel(0x1000, GPIO_BANK2_REG_SET_ADDR);
-	udelay(100000);
+	udelay(120000);
 
 	/* Using this function for setting a random mac address */
 	eth_random_enetaddr(enetaddr);
