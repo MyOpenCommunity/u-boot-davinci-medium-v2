@@ -89,6 +89,7 @@ typedef volatile struct _emac_desc
 #define EMAC_RXMBPENABLE_RXCAFEN_ENABLE	(0x200000)
 #define EMAC_RXMBPENABLE_RXBROADEN	(0x2000)
 
+#define MIIEN				(1 << 5)
 
 #define MDIO_CONTROL_IDLE		(0x80000000)
 #define MDIO_CONTROL_ENABLE		(0x40000000)

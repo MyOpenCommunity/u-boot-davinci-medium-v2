@@ -574,6 +574,8 @@ static void davinci_eth_ch_teardown(int ch)
 	dv_reg		dly = 0xff;
 	dv_reg		cnt;
 
+	if (!(readl(&adap_emac->MACCONTROL) & MIIEN))
+		return;
 	debug_emac("+ emac_ch_teardown\n");
 
 	if (ch == EMAC_CH_TX) {
