@@ -37,3 +37,5 @@ make -j16 && echo "Mhplay-w OK" >> /tmp/Medium_compile_u-boot.log
 make distclean
 make davinci_seah_config
 make -j16 && echo "Seah OK" >> /tmp/Medium_compile_u-boot.log
+make davinci_gekko_config
+make -j16 && echo "Gekko OK" >> /tmp/Medium_compile_u-boGekko

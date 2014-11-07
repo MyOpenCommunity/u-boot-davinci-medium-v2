@@ -1117,6 +1117,7 @@ extern unsigned int __machine_arch_type;
 #define MACH_TYPE_AMICO_P              4798
 #define MACH_TYPE_MHPLAY_W             4857
 #define MACH_TYPE_SEAH                 4902
+#define MACH_TYPE_GEKKO                4816
 
 #ifdef CONFIG_ARCH_EBSA110
 # ifdef machine_arch_type
@@ -14376,6 +14377,19 @@ extern unsigned int __machine_arch_type;
 # define machine_is_seah()   (machine_arch_type == MACH_TYPE_SEAH)
 #else
 # define machine_is_seah()   (0)
+#endif
+
+#ifdef MACH_TYPE_GEKKO
+# ifdef machine_arch_type
+#  undef machine_arch_type
+#  define machine_arch_type     __machine_arch_type
+# else
+#  define machine_arch_type     MACH_TYPE_SEAH
+#  define machine_arch_type     MACH_TYPE_GEKKO
+# endif
+# define machine_is_gekko()      (machine_arch_type == MACH_TYPE_GEKKO)
+#else
+# define machine_is_gekko()      (0)
 #endif
 
 /*
